@@ -21,7 +21,7 @@ func main() {
 	// Start the timer
 	go startTimer(timer, &durationSeconds)
 
-	time.Sleep(time.durationSeconds(durationSeconds) * time.Second)
+	time.Sleep(time.Duration(durationSeconds) * time.Second)
 
 	// Stop the timer
 	stopTimer(timer)
