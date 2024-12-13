@@ -7,20 +7,26 @@ import (
     "os/exec"
 ) 
 
+
+type Timer struct {
+    ticker *time.Ticker
+    done chan bool
+    duration int
+}
+
 func main() {
 	// Create a ticker; this is a channel that is given a value every time.Second
-	ticker := time.NewTicker(time.Second)
-	done := make(chan bool)
     secondsLeft := 10
+	timer := createTimer(secondsLeft)
 
     // Start the timer
     go func() {
         for {
             select {
-            case <-done:
+            case <-timer.done:
                 return
             // Every time the ticker channel emits a value (aka one second passes)
-            case <-ticker.C:
+            case <-timer.ticker.C:
                 secondsLeft -= 1
                 clearScreen()  
                 fmt.Println("Seconds left:", secondsLeft)
@@ -31,8 +37,8 @@ func main() {
     time.Sleep(time.Duration(secondsLeft) * time.Second)
 
     // Stop the timer
-    ticker.Stop()
-    done <- true
+    timer.ticker.Stop()
+    timer.done <- true
     fmt.Println("Time is up!")
 
 }
@@ -41,4 +47,12 @@ func clearScreen() {
     cmd := exec.Command("clear") // For Linux, macOS
     cmd.Stdout = os.Stdout
     cmd.Run()
+}
+
+func createTimer(duration int) *Timer {
+    return &Timer {
+        ticker: time.NewTicker(time.Second),
+        done: make (chan bool),
+        duration: duration,
+    }
 }
