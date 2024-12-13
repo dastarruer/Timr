@@ -8,11 +8,12 @@ import (
 ) 
 
 func main() {
-	// Create a ticker; this is a channel that is given a value every 'd' 
+	// Create a ticker; this is a channel that is given a value every time.Second
 	ticker := time.NewTicker(time.Second)
 	done := make(chan bool)
     secondsLeft := 10
 
+    // Start the timer
     go func() {
         for {
             select {
@@ -21,17 +22,23 @@ func main() {
             // Every time the ticker channel emits a value (aka one second passes)
             case <-ticker.C:
                 secondsLeft -= 1
-                cmd := exec.Command("clear") // For Linux, macOS
-                cmd.Stdout = os.Stdout
-                cmd.Run()
+                clearScreen()  
                 fmt.Println("Seconds left:", secondsLeft)
             }
         }
     }()
 
-    time.Sleep(10 * time.Second)
+    time.Sleep(time.Duration(secondsLeft) * time.Second)
+
+    // Stop the timer
     ticker.Stop()
     done <- true
-    fmt.Println("Ticker stopped")
+    fmt.Println("Time is up!")
 
+}
+
+func clearScreen() {
+    cmd := exec.Command("clear") // For Linux, macOS
+    cmd.Stdout = os.Stdout
+    cmd.Run()
 }
