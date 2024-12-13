@@ -10,18 +10,18 @@ import (
 type Timer struct {
 	ticker   *time.Ticker
 	done     chan bool
-	duration int
+	durationSeconds int
 }
 
 func main() {
 	// Create a ticker; this is a channel that is given a value every time.Second
-	secondsLeft := 2
-	timer := createTimer(secondsLeft)
+	durationSeconds := 2
+	timer := createTimer(durationSeconds)
 
 	// Start the timer
-	go startTimer(timer, &secondsLeft)
+	go startTimer(timer, &durationSeconds)
 
-	time.Sleep(time.Duration(secondsLeft) * time.Second)
+	time.Sleep(time.durationSeconds(durationSeconds) * time.Second)
 
 	// Stop the timer
 	stopTimer(timer)
@@ -35,24 +35,24 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func createTimer(duration int) *Timer {
+func createTimer(durationSeconds int) *Timer {
 	return &Timer{
 		ticker:   time.NewTicker(time.Second),
 		done:     make(chan bool),
-		duration: duration,
+		durationSeconds: durationSeconds,
 	}
 }
 
-func startTimer(timer *Timer, duration *int) {
+func startTimer(timer *Timer, durationSeconds *int) {
 	for {
 		select {
 		case <-timer.done:
 			return
 		// Every time the ticker channel emits a value (aka one second passes)
 		case <-timer.ticker.C:
-			*duration -= 1
+			*durationSeconds -= 1
 			clearScreen()
-			fmt.Println("Seconds left:", *duration)
+			fmt.Println("Seconds left:", *durationSeconds)
 		}
 	}
 }
