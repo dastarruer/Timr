@@ -16,7 +16,7 @@ type Timer struct {
 
 func main() {
 	// Create a ticker; this is a channel that is given a value every time.Second
-    secondsLeft := 10
+    secondsLeft := 2
 	timer := createTimer(secondsLeft)
 
     // Start the timer
@@ -37,10 +37,8 @@ func main() {
     time.Sleep(time.Duration(secondsLeft) * time.Second)
 
     // Stop the timer
-    timer.ticker.Stop()
-    timer.done <- true
+    stopTimer(timer)
     fmt.Println("Time is up!")
-
 }
 
 func clearScreen() {
@@ -55,4 +53,9 @@ func createTimer(duration int) *Timer {
         done: make (chan bool),
         duration: duration,
     }
+}
+
+func stopTimer(timer *Timer) {
+    timer.ticker.Stop()
+    timer.done <- true
 }
