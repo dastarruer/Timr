@@ -8,8 +8,8 @@ import (
 )
 
 type Timer struct {
-	ticker   *time.Ticker
-	done     chan bool
+	ticker          *time.Ticker
+	done            chan bool
 	durationSeconds int
 }
 
@@ -21,6 +21,7 @@ func main() {
 	// Start the timer
 	go startTimer(timer, &durationSeconds)
 
+	// Stop the main function while the timer runs
 	time.Sleep(time.Duration(durationSeconds) * time.Second)
 
 	// Stop the timer
@@ -37,8 +38,8 @@ func clearScreen() {
 
 func createTimer(durationSeconds int) *Timer {
 	return &Timer{
-		ticker:   time.NewTicker(time.Second),
-		done:     make(chan bool),
+		ticker:          time.NewTicker(time.Second),
+		done:            make(chan bool),
 		durationSeconds: durationSeconds,
 	}
 }
