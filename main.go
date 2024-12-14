@@ -6,24 +6,18 @@ import (
 	"timr/timer"
 )
 
-
-
 func main() {
 	// Create a ticker; this is a channel that is given a value every time.Second
 	durationSeconds := 2
-	timer := timer.createTimer(durationSeconds)
+	timer := timer.CreateTimer(durationSeconds)
 
 	// Start the timer
-	go timer.startTimer(timer, &durationSeconds)
+	go timer.StartTimer()
 
 	// Stop the main function while the timer runs
 	time.Sleep(time.Duration(durationSeconds) * time.Second)
 
 	// Stop the timer
-	timer.stopTimer(timer)
+	timer.StopTimer()
 	fmt.Println("Time is up!")
 }
-
-
-
-

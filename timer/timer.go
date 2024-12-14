@@ -20,7 +20,7 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func createTimer(durationSeconds int) *Timer {
+func CreateTimer(durationSeconds int) *Timer {
 	return &Timer{
 		ticker:          time.NewTicker(time.Second),
 		done:            make(chan bool),
@@ -28,7 +28,7 @@ func createTimer(durationSeconds int) *Timer {
 	}
 }
 
-func (timer *Timer) startTimer() {
+func (timer *Timer) StartTimer() {
 	for {
 		select {
 		case <-timer.done:
@@ -42,7 +42,7 @@ func (timer *Timer) startTimer() {
 	}
 }
 
-func (timer *Timer) stopTimer() {
+func (timer *Timer) StopTimer() {
 	timer.ticker.Stop()
 	timer.done <- true
 }
