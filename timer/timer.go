@@ -37,11 +37,16 @@ func CreateTimer(durationSeconds int) *Timer {
 	}
 }
 
+// Clear the screen and print the time left on the timer
+func (timer *Timer) printTimeLeft() {
+	clearScreen()
+	fmt.Println(convertToDigitalFormat(timer.durationSeconds))
+}
+
 // Start the timer and print the time left to the user
 func (timer *Timer) StartTimer() {
 	// We print the time left at the beginning, so that the timer does not start one second after the user starts the program
-	clearScreen()
-	fmt.Println(convertToDigitalFormat(timer.durationSeconds))
+	timer.printTimeLeft()
 	for {
 		select {
 		// If the timer's done channel emits a value (aka it is set to true)
@@ -50,8 +55,7 @@ func (timer *Timer) StartTimer() {
 		// Every time the ticker channel emits a value (aka one second passes)
 		case <-timer.ticker.C:
 			timer.durationSeconds -= 1
-			clearScreen()
-			fmt.Println(convertToDigitalFormat(timer.durationSeconds))
+			timer.printTimeLeft()
 		}
 	}
 }
