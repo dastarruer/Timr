@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strconv"
 	"time"
 )
 
@@ -20,6 +21,13 @@ func clearScreen() {
 	cmd.Run()
 }
 
+func convertToDigitalFormat(timeSeconds int) string {
+	minutes := strconv.Itoa(timeSeconds / 60)
+	seconds := strconv.Itoa(timeSeconds % 60)
+	result := fmt.Sprintf("%s:%s", minutes, seconds)
+	return result
+}
+
 // Return a pointer to a new Timer instance
 func CreateTimer(durationSeconds int) *Timer {
 	return &Timer{
@@ -31,6 +39,9 @@ func CreateTimer(durationSeconds int) *Timer {
 
 // Start the timer and print the time left to the user
 func (timer *Timer) StartTimer() {
+	// We print the time left at the beginning, so that the timer does not start one second after the user starts the program
+	clearScreen()
+	fmt.Println(convertToDigitalFormat(timer.durationSeconds))
 	for {
 		select {
 		// If the timer's done channel emits a value (aka it is set to true)
@@ -40,7 +51,7 @@ func (timer *Timer) StartTimer() {
 		case <-timer.ticker.C:
 			timer.durationSeconds -= 1
 			clearScreen()
-			fmt.Println("Seconds left:", timer.durationSeconds)
+			fmt.Println(convertToDigitalFormat(timer.durationSeconds))
 		}
 	}
 }
