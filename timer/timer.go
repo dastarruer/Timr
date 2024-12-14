@@ -20,6 +20,7 @@ func clearScreen() {
 	cmd.Run()
 }
 
+// Return a pointer to a new Timer instance
 func CreateTimer(durationSeconds int) *Timer {
 	return &Timer{
 		ticker:          time.NewTicker(time.Second),
@@ -28,9 +29,11 @@ func CreateTimer(durationSeconds int) *Timer {
 	}
 }
 
+// Start the timer and print the time left to the user
 func (timer *Timer) StartTimer() {
 	for {
 		select {
+		// If the timer's done channel emits a value (aka it is set to true)
 		case <-timer.done:
 			return
 		// Every time the ticker channel emits a value (aka one second passes)
@@ -42,8 +45,10 @@ func (timer *Timer) StartTimer() {
 	}
 }
 
+// Stop the timer
 func (timer *Timer) StopTimer() {
 	timer.ticker.Stop()
+	// Set done to true, which will tell the StartTimer() function to stop
 	timer.done <- true
 	clearScreen()
 }
