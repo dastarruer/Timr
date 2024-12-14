@@ -45,4 +45,5 @@ func (timer *Timer) StartTimer() {
 func (timer *Timer) StopTimer() {
 	timer.ticker.Stop()
 	timer.done <- true
+	clearScreen()
 }
