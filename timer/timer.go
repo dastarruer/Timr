@@ -13,6 +13,13 @@ type Timer struct {
 	durationSeconds int
 }
 
+// Only works for linux/mac
+func clearScreen() {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
+
 func createTimer(durationSeconds int) *Timer {
 	return &Timer{
 		ticker:          time.NewTicker(time.Second),
@@ -21,14 +28,7 @@ func createTimer(durationSeconds int) *Timer {
 	}
 }
 
-// Only works for linux/mac
-func clearScreen() {
-	cmd := exec.Command("clear")
-	cmd.Stdout = os.Stdout
-	cmd.Run()
-}
-
-func startTimer(timer *Timer) {
+func (timer *Timer) startTimer() {
 	for {
 		select {
 		case <-timer.done:
@@ -42,7 +42,7 @@ func startTimer(timer *Timer) {
 	}
 }
 
-func stopTimer(timer *Timer) {
+func (timer *Timer) stopTimer() {
 	timer.ticker.Stop()
 	timer.done <- true
 }
