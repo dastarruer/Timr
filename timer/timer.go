@@ -28,16 +28,16 @@ func clearScreen() {
 	cmd.Run()
 }
 
-func startTimer(timer *Timer, durationSeconds *int) {
+func startTimer(timer *Timer) {
 	for {
 		select {
 		case <-timer.done:
 			return
 		// Every time the ticker channel emits a value (aka one second passes)
 		case <-timer.ticker.C:
-			*durationSeconds -= 1
+			timer.durationSeconds -= 1
 			clearScreen()
-			fmt.Println("Seconds left:", *durationSeconds)
+			fmt.Println("Seconds left:", timer.durationSeconds)
 		}
 	}
 }
