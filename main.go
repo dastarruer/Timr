@@ -8,7 +8,7 @@ import (
 
 func main() {
 	// Create a ticker; this is a channel that is given a value every time.Second
-	durationSeconds := 2
+	durationSeconds := 25
 	timer := timer.CreateTimer(durationSeconds)
 
 	// Start the timer
