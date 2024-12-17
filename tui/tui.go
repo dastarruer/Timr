@@ -5,8 +5,8 @@ import (
 )
 
 func HelloWorld() {
-	box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
-	
+	box := tview.NewBox().SetBorder(true).SetTitle("timr")
+
 	app := tview.NewApplication()
 
 	if err := app.SetRoot(box, true).Run(); err != nil {
