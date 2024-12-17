@@ -4,12 +4,11 @@ import (
 	"github.com/rivo/tview"
 )
 
-func ShowTimer(time string) {
+func ShowTimer(durationSeconds string) {
 	app := tview.NewApplication()
-	
+
 	// Create a TextView
 	textView := tview.NewTextView().
-		SetText(time).
 		SetTextAlign(tview.AlignCenter). // Center horizontally
 		SetDynamicColors(true).
 		SetWrap(true)
@@ -25,4 +24,8 @@ func ShowTimer(time string) {
 	if err := app.SetRoot(flex, true).Run(); err != nil {
 		panic(err)
 	}
+}
+
+func UpdateTimer(textView *tview.TextView, time string) {
+	textView.SetText(time)
 }
