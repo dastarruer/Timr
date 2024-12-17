@@ -40,7 +40,7 @@ func CreateTimer(durationSeconds int) *Timer {
 // Clear the screen and print the time left on the timer
 func (timer *Timer) printTimeLeft() {
 	clearScreen()
-	fmt.Println(convertToDigitalFormat(timer.durationSeconds))
+	fmt.Println("Time left: " + convertToDigitalFormat(timer.durationSeconds))
 }
 
 // Start the timer and print the time left to the user
