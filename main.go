@@ -1,26 +1,24 @@
 package main
 
 import (
-	// "fmt"
-	// "time"
-	// "timr/timer"
-	"timr/tui"
+	"fmt"
+	"time"
+	"timr/timer"
 )
 
 func main() {
 	// Create a ticker; this is a channel that is given a value every time.Second
-	// durationSeconds := 1
-	// timer := timer.CreateTimer(durationSeconds)
+	durationSeconds := 1
+	timer := timer.CreateTimer(durationSeconds)
 
-	// // Start the timer
-	// go timer.StartTimer()
+	// Start the timer
+	go timer.StartTimer()
 
-	// // Stop the main function while the timer runs
-	// time.Sleep(time.Duration(durationSeconds) * time.Second)
+	// Stop the main function while the timer runs
+	time.Sleep(time.Duration(durationSeconds) * time.Second)
 
-	// // Stop the timer
-	// timer.StopTimer()
-	// fmt.Println("Time is up!")
+	// Stop the timer
+	timer.StopTimer()
+	fmt.Println("Time is up!")
 
-	tui.HelloWorld()
 }

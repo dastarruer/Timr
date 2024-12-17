@@ -4,12 +4,12 @@ import (
 	"github.com/rivo/tview"
 )
 
-func HelloWorld() {
+func ShowTimer(time string) {
 	app := tview.NewApplication()
-
+	
 	// Create a TextView
 	textView := tview.NewTextView().
-		SetText("hello world!").
+		SetText(time).
 		SetTextAlign(tview.AlignCenter). // Center horizontally
 		SetDynamicColors(true).
 		SetWrap(true)
