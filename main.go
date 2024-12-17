@@ -9,11 +9,16 @@ import (
 )
 
 func main() {
-	args := os.Args[1:]
+	args := os.Args
 
 	pattern := `^([1-9]|1[0-9]|2[0-3]):([1-9]|[1-5][0-9]):([1-9]|[1-5][0-9])$`
 
-	re = regexp.MustCompile(pattern)
+	re := regexp.MustCompile(pattern)
+
+	if !re.MatchString(args[1]) {
+		fmt.Println("usage: ./main.go [hours:minutes:seconds]")
+		os.Exit(1)
+	}
 
 	// Create a ticker; this is a channel that is given a value every time.Second
 	durationSeconds := 70
